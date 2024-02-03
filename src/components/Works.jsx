@@ -38,9 +38,6 @@ const ProjectCard = ({index, name, description, tags, image, source_code_link}) 
             ))}
           </div>
 
-
-
-
         </Tilt>
     </motion.div>
   )
