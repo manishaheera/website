@@ -6,7 +6,7 @@ import { OrbitControls, Preload} from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 
-const Computers = () => {
+const Computers = ({mobile}) => {
 
 
   const model = useLoader(GLTFLoader, './desktop_pc/scene.gltf')
@@ -18,17 +18,17 @@ const Computers = () => {
       <hemisphereLight intensity={4.9} groundColor="black"/>
       <pointLight intensity={1} /> 
       <spotLight position ={[-20,50,10]} angle={[0.12]} penumbra={1} intensity={1}  castShadow shadow-mapSize={1024} />
-      <primitive object={model.scene} scale={0.75} position={[0, -3.25, -1.5]} rotation={[-0.01, -0.2, -0.1]}/>
+      <primitive object={model.scene} scale={mobile? 0.7 : 0.75} position={mobile? [0, -3, -2.2] : [0, -3.25, -1.5]} rotation={[-0.01, -0.2, -0.1]}/>
     </mesh>
   )
 }
 
 const ComputersCanvas = () => {
 
-  const [Mobile, setMobile] = useState(false);
+  const [mobile, setMobile] = useState(false);
 
   useEffect(()=> {
-    const mediaQuery = window.matchMedia('max-width: 500');
+    const mediaQuery = window.matchMedia('(max-width: 500px)');
 
     setMobile(mediaQuery.matches);
 
@@ -48,7 +48,7 @@ const ComputersCanvas = () => {
 
     <Suspense fallback={<CanvasLoader />}>
       <OrbitControls enableZoom={false} maxPolarAngle={Math.PI / 2} minPolarAngle={Math.PI / 2}/> 
-      <Computers />
+      <Computers mobile={mobile}/>
 
 
     </Suspense>
